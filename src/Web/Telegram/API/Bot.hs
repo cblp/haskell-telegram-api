@@ -4,7 +4,7 @@ module Web.Telegram.API.Bot
     module TAPI
   ) where
 
-import           Web.Telegram.API.Bot.API as TAPI
+import           Web.Telegram.API.Bot.API as TAPI (TelegramBotAPI, Token(..), api, runClientEx)
 import           Web.Telegram.API.Bot.Data as TAPI
 import           Web.Telegram.API.Bot.IO as TAPI
 import           Web.Telegram.API.Bot.Requests as TAPI

@@ -1,11 +1,12 @@
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE TypeOperators              #-}
 
 module Web.Telegram.API.Bot.IO
   ( -- * Functions
     runClient
+    -- * Constants
+  , telegramBaseUrl
     -- * API Methods
   , getMe
   , sendMessage
@@ -54,7 +55,8 @@ import           Data.Text (Text)
 import           Network.HTTP.Client (Manager)
 import           Servant.Client (BaseUrl(..), ClientM, Scheme(Https), ServantError)
 
-import           Web.Telegram.API.Bot.API
+import           Web.Telegram.API.Bot.API (Token, runClientEx)
+import qualified Web.Telegram.API.Bot.API as API
 import           Web.Telegram.API.Bot.Requests
 import           Web.Telegram.API.Bot.Responses
 
@@ -64,89 +66,89 @@ telegramBaseUrl = BaseUrl Https "api.telegram.org" 443 ""
 -- | A simple method for testing your bot's auth token. Requires no parameters.
 --   Returns basic information about the bot in form of a 'User' object.
 getMe :: Token -> Manager -> IO (Either ServantError GetMeResponse)
-getMe token = runClient' token getMe_
+getMe token = runClient' token API.getMe
 
 -- | Use this method to send text messages. On success, the sent 'Message' is returned.
 sendMessage :: Token -> SendMessageRequest -> Manager -> IO (Either ServantError MessageResponse)
-sendMessage = run telegramBaseUrl sendMessage_
+sendMessage = run telegramBaseUrl API.sendMessage
 
 -- | Use this method to forward messages of any kind. On success, the sent 'Message' is returned.
 forwardMessage :: Token -> ForwardMessageRequest -> Manager -> IO (Either ServantError MessageResponse)
-forwardMessage = run telegramBaseUrl forwardMessage_
+forwardMessage = run telegramBaseUrl API.forwardMessage
 
 -- | Use this method to upload and send photos. On success, the sent 'Message' is returned.
 uploadPhoto :: Token -> SendPhotoRequest FileUpload -> Manager -> IO (Either ServantError MessageResponse)
-uploadPhoto = run telegramBaseUrl uploadPhoto_
+uploadPhoto = run telegramBaseUrl API.uploadPhoto
 
 -- | Use this method to send photos that have already been uploaded. On success, the sent 'Message' is returned.
 sendPhoto :: Token -> SendPhotoRequest Text -> Manager -> IO (Either ServantError MessageResponse)
-sendPhoto = run telegramBaseUrl sendPhoto_
+sendPhoto = run telegramBaseUrl API.sendPhoto
 
 -- | Use this method to upload and send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent 'Message' is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
 --
 --       For backward compatibility, when the fields __title__ and __performer__ are both empty and the mime-type of the file to be sent is not _audio/mpeg_, the file will be sent as a playable voice message. For this to work, the audio must be in an .ogg file encoded with OPUS. This behavior will be phased out in the future. For sending voice messages, use the 'sendVoice' method instead.
 uploadAudio :: Token -> SendAudioRequest FileUpload -> Manager -> IO (Either ServantError MessageResponse)
-uploadAudio = run telegramBaseUrl uploadAudio_
+uploadAudio = run telegramBaseUrl API.uploadAudio
 
 -- | Use this method to send audio files that are already on the Telegram servers, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent 'Message' is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
 --
 --       For backward compatibility, when the fields __title__ and __performer__ are both empty and the mime-type of the file to be sent is not _audio/mpeg_, the file will be sent as a playable voice message. For this to work, the audio must be in an .ogg file encoded with OPUS. This behavior will be phased out in the future. For sending voice messages, use the 'sendVoice' method instead.
 sendAudio :: Token -> SendAudioRequest Text -> Manager -> IO (Either ServantError MessageResponse)
-sendAudio = run telegramBaseUrl sendAudio_
+sendAudio = run telegramBaseUrl API.sendAudio
 
 -- | Use this method to upload and send general files. On success, the sent 'Message' is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
 uploadDocument :: Token -> SendDocumentRequest FileUpload -> Manager -> IO (Either ServantError MessageResponse)
-uploadDocument = run telegramBaseUrl uploadDocument_
+uploadDocument = run telegramBaseUrl API.uploadDocument
 
 -- | Use this method to send general files that have already been uploaded. On success, the sent 'Message' is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
 sendDocument :: Token -> SendDocumentRequest Text -> Manager -> IO (Either ServantError MessageResponse)
-sendDocument = run telegramBaseUrl sendDocument_
+sendDocument = run telegramBaseUrl API.sendDocument
 
 -- | Use this method to upload and send .webp stickers. On success, the sent 'Message' is returned.
 uploadSticker :: Token -> SendStickerRequest FileUpload -> Manager -> IO (Either ServantError MessageResponse)
-uploadSticker = run telegramBaseUrl uploadSticker_
+uploadSticker = run telegramBaseUrl API.uploadSticker
 
 -- | Use this method to send .webp stickers that are already on the Telegram servers. On success, the sent 'Message' is returned.
 sendSticker :: Token -> SendStickerRequest Text -> Manager -> IO (Either ServantError MessageResponse)
-sendSticker = run telegramBaseUrl sendSticker_
+sendSticker = run telegramBaseUrl API.sendSticker
 
 -- | Use this method to upload and send video files. Telegram clients support mp4 videos (other formats may be sent as 'Document'). On success, the sent 'Message' is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 uploadVideo :: Token -> SendVideoRequest FileUpload -> Manager -> IO (Either ServantError MessageResponse)
-uploadVideo = run telegramBaseUrl uploadVideo_
+uploadVideo = run telegramBaseUrl API.uploadVideo
 
 -- | Use this method to send video files that are already on the Telegram servers. Telegram clients support mp4 videos (other formats may be sent as 'Document'). On success, the sent 'Message' is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 sendVideo :: Token -> SendVideoRequest Text -> Manager -> IO (Either ServantError MessageResponse)
-sendVideo = run telegramBaseUrl sendVideo_
+sendVideo = run telegramBaseUrl API.sendVideo
 
 -- | Use this method to upload and send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as 'Audio' or 'Document'). On success, the sent 'Message' is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
 uploadVoice :: Token -> SendVoiceRequest FileUpload -> Manager -> IO (Either ServantError MessageResponse)
-uploadVoice = run telegramBaseUrl uploadVoice_
+uploadVoice = run telegramBaseUrl API.uploadVoice
 
 -- | Use this method to send audio files that are already on the telegram server, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as 'Audio' or 'Document'). On success, the sent 'Message' is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
 sendVoice :: Token -> SendVoiceRequest Text -> Manager -> IO (Either ServantError MessageResponse)
-sendVoice = run telegramBaseUrl sendVoice_
+sendVoice = run telegramBaseUrl API.sendVoice
 
 -- | Use this method to send point on the map. On success, the sent 'Message' is returned.
 sendLocation :: Token -> SendLocationRequest -> Manager -> IO (Either ServantError MessageResponse)
-sendLocation = run telegramBaseUrl sendLocation_
+sendLocation = run telegramBaseUrl API.sendLocation
 
 -- | Use this method to send information about a venue. On success, the sent 'Message' is returned.
 sendVenue :: Token -> SendVenueRequest -> Manager -> IO (Either ServantError MessageResponse)
-sendVenue = run telegramBaseUrl sendVenue_
+sendVenue = run telegramBaseUrl API.sendVenue
 
 -- | Use this method to send information about a venue. On success, the sent 'Message' is returned.
 sendContact :: Token -> SendContactRequest -> Manager -> IO (Either ServantError MessageResponse)
-sendContact = run telegramBaseUrl sendContact_
+sendContact = run telegramBaseUrl API.sendContact
 
 -- | Use this method when you need to tell the user that something is happening on the bot's side.
 --   The status is set for 5 seconds or less (when a message arrives from your bot,
 --   Telegram clients clear its typing status).
 sendChatAction :: Token -> SendChatActionRequest -> Manager -> IO (Either ServantError ChatActionResponse)
-sendChatAction = run telegramBaseUrl sendChatAction_
+sendChatAction = run telegramBaseUrl API.sendChatAction
 
 -- | Use this method to send a game. On success, the sent 'Message' is returned.
 sendGame :: Token -> SendGameRequest -> Manager -> IO (Either ServantError MessageResponse)
-sendGame = run telegramBaseUrl sendGame_
+sendGame = run telegramBaseUrl API.sendGame
 
 -- | Use this method to receive incoming updates using long polling. An Array of 'Update' objects is returned.
 getUpdates
@@ -156,15 +158,15 @@ getUpdates
     -> Maybe Int -- ^ timeout
     -> Manager
     -> IO (Either ServantError UpdatesResponse)
-getUpdates token offset limit timeout = runClient' token $ getUpdates_ offset limit timeout
+getUpdates token offset limit timeout = runClient' token $ API.getUpdates offset limit timeout
 
 -- | Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a 'File' object is returned. The file can then be downloaded via the link @https://api.telegram.org/file/bot<token>/<file_path>@, where @<file_path>@ is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
 getFile :: Token -> Text -> Manager -> IO (Either ServantError FileResponse)
-getFile token file_id = runClient' token $ getFile_ (Just file_id)
+getFile token file_id = runClient' token $ API.getFile (Just file_id)
 
 -- | Use this method to get a list of profile pictures for a user. Returns a 'UserProfilePhotos' object.
 getUserProfilePhotos :: Token -> Int -> Maybe Int -> Maybe Int -> Manager -> IO (Either ServantError UserProfilePhotosResponse)
-getUserProfilePhotos token user_id offset limit = runClient' token $ getUserProfilePhotos_ (Just user_id) offset limit
+getUserProfilePhotos token user_id offset limit = runClient' token $ API.getUserProfilePhotos (Just user_id) offset limit
 
 -- | Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized 'Update'. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
 --
@@ -173,77 +175,77 @@ setWebhook :: Token
     -> Maybe Text -- ^ HTTPS url to send updates to. Use an empty string to remove webhook integration
     -> Manager
     -> IO (Either ServantError SetWebhookResponse)
-setWebhook token url = runClient' token $ setWebhook_ url
+setWebhook token url = runClient' token $ API.setWebhook url
 
 -- | Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized 'Update'. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
 --
 --       If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. @https://www.example.com/<token>@. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.
 setWebhookWithCertificate :: Token -> SetWebhookRequest -> Manager -> IO (Either ServantError SetWebhookResponse)
-setWebhookWithCertificate = run telegramBaseUrl setWebhookWithCert_
+setWebhookWithCertificate = run telegramBaseUrl API.setWebhookWithCert
 
 -- | Contains information about the current status of a webhook.
 getWebhookInfo :: Token -> Manager -> IO (Either ServantError GetWebhookInfoResponse)
-getWebhookInfo token = runClient' token getWebhookInfo_
+getWebhookInfo token = runClient' token API.getWebhookInfo
 
 -- | Use this method to send answers to an inline query. No more than 50 results per query are allowed.
 answerInlineQuery :: Token -> AnswerInlineQueryRequest -> Manager -> IO (Either ServantError InlineQueryResponse)
-answerInlineQuery = run telegramBaseUrl answerInlineQuery_
+answerInlineQuery = run telegramBaseUrl API.answerInlineQuery
 
 -- | Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
 answerCallbackQuery :: Token -> AnswerCallbackQueryRequest -> Manager -> IO (Either ServantError CallbackQueryResponse)
-answerCallbackQuery = run telegramBaseUrl answerCallbackQuery_
+answerCallbackQuery = run telegramBaseUrl API.answerCallbackQuery
 
 -- | Use this method to kick a user from a group or a supergroup. In the case of supergroups, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the group for this to work.
 kickChatMember :: Token -> Text -> Int -> Manager -> IO (Either ServantError KickChatMemberResponse)
-kickChatMember token chat_id user_id = runClient' token $ kickChatMember_ (Just chat_id) (Just user_id)
+kickChatMember token chat_id user_id = runClient' token $ API.kickChatMember (Just chat_id) (Just user_id)
 
 -- | Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
 leaveChat :: Token -> Text -> Manager -> IO (Either ServantError LeaveChatResponse)
-leaveChat token chat_id = runClient' token $ leaveChat_ (Just chat_id)
+leaveChat token chat_id = runClient' token $ API.leaveChat (Just chat_id)
 
 -- | Use this method to unban a previously kicked user in a supergroup. The user will not return to the group automatically, but will be able to join via link, etc. The bot must be an administrator in the group for this to work.
 unbanChatMember :: Token -> Text -> Int -> Manager -> IO (Either ServantError UnbanChatMemberResponse)
-unbanChatMember token chat_id user_id = runClient' token $ unbanChatMember_ (Just chat_id) (Just user_id)
+unbanChatMember token chat_id user_id = runClient' token $ API.unbanChatMember (Just chat_id) (Just user_id)
 
 -- | Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.)
 getChat :: Token -> Text -> Manager -> IO (Either ServantError GetChatResponse)
-getChat token chat_id = runClient' token $ getChat_ (Just chat_id)
+getChat token chat_id = runClient' token $ API.getChat (Just chat_id)
 
 -- | Use this method to get a list of administrators in a chat. On success, returns an Array of 'ChatMember' objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
 getChatAdministrators :: Token -> Text -> Manager -> IO (Either ServantError GetChatAdministratorsResponse)
-getChatAdministrators token chat_id = runClient' token $ getChatAdministrators_ (Just chat_id)
+getChatAdministrators token chat_id = runClient' token $ API.getChatAdministrators (Just chat_id)
 
 -- | Use this method to get the number of members in a chat. Returns 'Int' on success.
 getChatMembersCount :: Token -> Text -> Manager -> IO (Either ServantError GetChatMembersCountResponse)
-getChatMembersCount token chat_id = runClient' token $ getChatMembersCount_ (Just chat_id)
+getChatMembersCount token chat_id = runClient' token $ API.getChatMembersCount (Just chat_id)
 
 -- | Use this method to get information about a member of a chat. Returns a 'ChatMember' object on success.
 getChatMember :: Token -> Text -> Int -> Manager -> IO (Either ServantError GetChatMemberResponse)
-getChatMember token chat_id user_id = runClient' token $ getChatMember_ (Just chat_id) (Just user_id)
+getChatMember token chat_id user_id = runClient' token $ API.getChatMember (Just chat_id) (Just user_id)
 
 -- | Use this method to edit text messages sent by the bot. On success, the edited 'Message' is returned, otherwise True is returned.
 editMessageText :: Token -> EditMessageTextRequest -> Manager -> IO (Either ServantError MessageResponse)
-editMessageText = run telegramBaseUrl editMessageText_
+editMessageText = run telegramBaseUrl API.editMessageText
 
 -- | Use this method to edit captions of messages sent by the bot. On success, the edited 'Message' is returned.
 editMessageCaption :: Token -> EditMessageCaptionRequest -> Manager -> IO (Either ServantError MessageResponse)
-editMessageCaption = run telegramBaseUrl editMessageCaption_
+editMessageCaption = run telegramBaseUrl API.editMessageCaption
 
 -- | Use this method to edit only the reply markup of messages sent by the bot. On success, the edited 'Message' is returned.
 editMessageReplyMarkup :: Token -> EditMessageReplyMarkupRequest -> Manager -> IO (Either ServantError MessageResponse)
-editMessageReplyMarkup = run telegramBaseUrl editMessageReplyMarkup_
+editMessageReplyMarkup = run telegramBaseUrl API.editMessageReplyMarkup
 
 -- | Use this method to edit text messages sent via the bot (for inline bots).
 editInlineMessageText :: Token -> EditMessageTextRequest -> Manager -> IO (Either ServantError (Response Bool))
-editInlineMessageText = run telegramBaseUrl editMessageText__
+editInlineMessageText = run telegramBaseUrl API.editMessageText_
 
 -- | Use this method to edit captions of messages sent via the bot (for inline bots).
 editInlineMessageCaption :: Token -> EditMessageCaptionRequest -> Manager -> IO (Either ServantError (Response Bool))
-editInlineMessageCaption = run telegramBaseUrl editMessageCaption__
+editInlineMessageCaption = run telegramBaseUrl API.editMessageCaption_
 
 -- | Use this method to edit only the reply markup of messages sent via the bot (for inline bots).
 editInlineMessageReplyMarkup :: Token -> EditMessageReplyMarkupRequest -> Manager -> IO (Either ServantError (Response Bool))
-editInlineMessageReplyMarkup = run telegramBaseUrl editMessageReplyMarkup__
+editInlineMessageReplyMarkup = run telegramBaseUrl API.editMessageReplyMarkup_
 
 run :: BaseUrl
     -> (request -> ClientM response)

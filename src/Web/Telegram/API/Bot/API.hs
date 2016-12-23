@@ -10,47 +10,47 @@ module Web.Telegram.API.Bot.API
   , TelegramBotAPI
   , api
     -- ** Methods
-  , answerCallbackQuery_
-  , answerInlineQuery_
+  , answerCallbackQuery
+  , answerInlineQuery
+  , editMessageCaption
   , editMessageCaption_
-  , editMessageCaption__
+  , editMessageReplyMarkup
   , editMessageReplyMarkup_
-  , editMessageReplyMarkup__
+  , editMessageText
   , editMessageText_
-  , editMessageText__
-  , forwardMessage_
-  , getChatAdministrators_
-  , getChatMember_
-  , getChatMembersCount_
-  , getChat_
-  , getFile_
-  , getMe_
-  , getUpdates_
-  , getUserProfilePhotos_
-  , kickChatMember_
-  , leaveChat_
-  , sendAudio_
-  , sendChatAction_
-  , sendContact_
-  , sendDocument_
-  , sendGame_
-  , sendLocation_
-  , sendMessage_
-  , sendPhoto_
-  , sendSticker_
-  , sendVenue_
-  , sendVideo_
-  , sendVoice_
-  , setWebhookWithCert_
-  , setWebhook_
-  , getWebhookInfo_
-  , unbanChatMember_
-  , uploadAudio_
-  , uploadDocument_
-  , uploadPhoto_
-  , uploadSticker_
-  , uploadVideo_
-  , uploadVoice_
+  , forwardMessage
+  , getChatAdministrators
+  , getChatMember
+  , getChatMembersCount
+  , getChat
+  , getFile
+  , getMe
+  , getUpdates
+  , getUserProfilePhotos
+  , getWebhookInfo
+  , kickChatMember
+  , leaveChat
+  , sendAudio
+  , sendChatAction
+  , sendContact
+  , sendDocument
+  , sendGame
+  , sendLocation
+  , sendMessage
+  , sendPhoto
+  , sendSticker
+  , sendVenue
+  , sendVideo
+  , sendVoice
+  , setWebhookWithCert
+  , setWebhook
+  , unbanChatMember
+  , uploadAudio
+  , uploadDocument
+  , uploadPhoto
+  , uploadSticker
+  , uploadVideo
+  , uploadVoice
     -- * Running ClientM
   , runClientEx
   ) where
@@ -205,88 +205,88 @@ type TelegramBotAPI =
 api :: Proxy TelegramBotAPI
 api = Proxy
 
-getMe_                     :: ClientM GetMeResponse
-sendMessage_               :: SendMessageRequest -> ClientM MessageResponse
-forwardMessage_            :: ForwardMessageRequest -> ClientM MessageResponse
-uploadPhoto_               :: SendPhotoRequest FileUpload -> ClientM MessageResponse
-sendPhoto_                 :: SendPhotoRequest Text -> ClientM MessageResponse
-uploadAudio_               :: SendAudioRequest FileUpload -> ClientM MessageResponse
-sendAudio_                 :: SendAudioRequest Text -> ClientM MessageResponse
-uploadDocument_            :: SendDocumentRequest FileUpload -> ClientM MessageResponse
-sendDocument_              :: SendDocumentRequest Text -> ClientM MessageResponse
-uploadSticker_             :: SendStickerRequest FileUpload -> ClientM MessageResponse
-sendSticker_               :: SendStickerRequest Text -> ClientM MessageResponse
-uploadVideo_               :: SendVideoRequest FileUpload -> ClientM MessageResponse
-sendVideo_                 :: SendVideoRequest Text -> ClientM MessageResponse
-uploadVoice_               :: SendVoiceRequest FileUpload -> ClientM MessageResponse
-sendVoice_                 :: SendVoiceRequest Text -> ClientM MessageResponse
-sendLocation_              :: SendLocationRequest -> ClientM MessageResponse
-sendVenue_                 :: SendVenueRequest-> ClientM MessageResponse
-sendContact_               :: SendContactRequest -> ClientM MessageResponse
-sendChatAction_            :: SendChatActionRequest -> ClientM ChatActionResponse
-sendGame_                  :: SendGameRequest -> ClientM MessageResponse
-getUpdates_                :: Maybe Int -> Maybe Int -> Maybe Int -> ClientM UpdatesResponse
-getFile_                   :: Maybe Text -> ClientM FileResponse
-getUserProfilePhotos_      :: Maybe Int -> Maybe Int -> Maybe Int -> ClientM UserProfilePhotosResponse
-setWebhook_                :: Maybe Text -> ClientM SetWebhookResponse
-setWebhookWithCert_        :: SetWebhookRequest -> ClientM SetWebhookResponse
-getWebhookInfo_            :: ClientM GetWebhookInfoResponse
-answerInlineQuery_         :: AnswerInlineQueryRequest -> ClientM InlineQueryResponse
-answerCallbackQuery_       :: AnswerCallbackQueryRequest -> ClientM CallbackQueryResponse
-kickChatMember_            :: Maybe Text -> Maybe Int -> ClientM KickChatMemberResponse
-leaveChat_                 :: Maybe Text -> ClientM LeaveChatResponse
-unbanChatMember_           :: Maybe Text -> Maybe Int -> ClientM UnbanChatMemberResponse
-getChat_                   :: Maybe Text -> ClientM GetChatResponse
-getChatAdministrators_     :: Maybe Text -> ClientM GetChatAdministratorsResponse
-getChatMembersCount_       :: Maybe Text -> ClientM GetChatMembersCountResponse
-getChatMember_             :: Maybe Text -> Maybe Int -> ClientM GetChatMemberResponse
-editMessageText_           :: EditMessageTextRequest -> ClientM MessageResponse
-editMessageCaption_        :: EditMessageCaptionRequest -> ClientM MessageResponse
-editMessageReplyMarkup_    :: EditMessageReplyMarkupRequest -> ClientM MessageResponse
-editMessageText__          :: EditMessageTextRequest -> ClientM (Response Bool)
-editMessageCaption__       :: EditMessageCaptionRequest -> ClientM (Response Bool)
-editMessageReplyMarkup__   :: EditMessageReplyMarkupRequest -> ClientM (Response Bool)
-getMe_
-  :<|> sendMessage_
-  :<|> forwardMessage_
-  :<|> uploadPhoto_
-  :<|> sendPhoto_
-  :<|> uploadAudio_
-  :<|> sendAudio_
-  :<|> uploadDocument_
-  :<|> sendDocument_
-  :<|> uploadSticker_
-  :<|> sendSticker_
-  :<|> uploadVideo_
-  :<|> sendVideo_
-  :<|> uploadVoice_
-  :<|> sendVoice_
-  :<|> sendLocation_
-  :<|> sendVenue_
-  :<|> sendContact_
-  :<|> sendChatAction_
-  :<|> sendGame_
-  :<|> getUpdates_
-  :<|> getFile_
-  :<|> getUserProfilePhotos_
-  :<|> setWebhook_
-  :<|> setWebhookWithCert_
-  :<|> getWebhookInfo_
-  :<|> answerInlineQuery_
-  :<|> answerCallbackQuery_
-  :<|> kickChatMember_
-  :<|> leaveChat_
-  :<|> unbanChatMember_
-  :<|> getChat_
-  :<|> getChatAdministrators_
-  :<|> getChatMembersCount_
-  :<|> getChatMember_
+getMe                     :: ClientM GetMeResponse
+sendMessage               :: SendMessageRequest -> ClientM MessageResponse
+forwardMessage            :: ForwardMessageRequest -> ClientM MessageResponse
+uploadPhoto               :: SendPhotoRequest FileUpload -> ClientM MessageResponse
+sendPhoto                 :: SendPhotoRequest Text -> ClientM MessageResponse
+uploadAudio               :: SendAudioRequest FileUpload -> ClientM MessageResponse
+sendAudio                 :: SendAudioRequest Text -> ClientM MessageResponse
+uploadDocument            :: SendDocumentRequest FileUpload -> ClientM MessageResponse
+sendDocument              :: SendDocumentRequest Text -> ClientM MessageResponse
+uploadSticker             :: SendStickerRequest FileUpload -> ClientM MessageResponse
+sendSticker               :: SendStickerRequest Text -> ClientM MessageResponse
+uploadVideo               :: SendVideoRequest FileUpload -> ClientM MessageResponse
+sendVideo                 :: SendVideoRequest Text -> ClientM MessageResponse
+uploadVoice               :: SendVoiceRequest FileUpload -> ClientM MessageResponse
+sendVoice                 :: SendVoiceRequest Text -> ClientM MessageResponse
+sendLocation              :: SendLocationRequest -> ClientM MessageResponse
+sendVenue                 :: SendVenueRequest-> ClientM MessageResponse
+sendContact               :: SendContactRequest -> ClientM MessageResponse
+sendChatAction            :: SendChatActionRequest -> ClientM ChatActionResponse
+sendGame                  :: SendGameRequest -> ClientM MessageResponse
+getUpdates                :: Maybe Int -> Maybe Int -> Maybe Int -> ClientM UpdatesResponse
+getFile                   :: Maybe Text -> ClientM FileResponse
+getUserProfilePhotos      :: Maybe Int -> Maybe Int -> Maybe Int -> ClientM UserProfilePhotosResponse
+setWebhook                :: Maybe Text -> ClientM SetWebhookResponse
+setWebhookWithCert        :: SetWebhookRequest -> ClientM SetWebhookResponse
+getWebhookInfo            :: ClientM GetWebhookInfoResponse
+answerInlineQuery         :: AnswerInlineQueryRequest -> ClientM InlineQueryResponse
+answerCallbackQuery       :: AnswerCallbackQueryRequest -> ClientM CallbackQueryResponse
+kickChatMember            :: Maybe Text -> Maybe Int -> ClientM KickChatMemberResponse
+leaveChat                 :: Maybe Text -> ClientM LeaveChatResponse
+unbanChatMember           :: Maybe Text -> Maybe Int -> ClientM UnbanChatMemberResponse
+getChat                   :: Maybe Text -> ClientM GetChatResponse
+getChatAdministrators     :: Maybe Text -> ClientM GetChatAdministratorsResponse
+getChatMembersCount       :: Maybe Text -> ClientM GetChatMembersCountResponse
+getChatMember             :: Maybe Text -> Maybe Int -> ClientM GetChatMemberResponse
+editMessageText           :: EditMessageTextRequest -> ClientM MessageResponse
+editMessageCaption        :: EditMessageCaptionRequest -> ClientM MessageResponse
+editMessageReplyMarkup    :: EditMessageReplyMarkupRequest -> ClientM MessageResponse
+editMessageText_          :: EditMessageTextRequest -> ClientM (Response Bool)
+editMessageCaption_       :: EditMessageCaptionRequest -> ClientM (Response Bool)
+editMessageReplyMarkup_   :: EditMessageReplyMarkupRequest -> ClientM (Response Bool)
+getMe
+  :<|> sendMessage
+  :<|> forwardMessage
+  :<|> uploadPhoto
+  :<|> sendPhoto
+  :<|> uploadAudio
+  :<|> sendAudio
+  :<|> uploadDocument
+  :<|> sendDocument
+  :<|> uploadSticker
+  :<|> sendSticker
+  :<|> uploadVideo
+  :<|> sendVideo
+  :<|> uploadVoice
+  :<|> sendVoice
+  :<|> sendLocation
+  :<|> sendVenue
+  :<|> sendContact
+  :<|> sendChatAction
+  :<|> sendGame
+  :<|> getUpdates
+  :<|> getFile
+  :<|> getUserProfilePhotos
+  :<|> setWebhook
+  :<|> setWebhookWithCert
+  :<|> getWebhookInfo
+  :<|> answerInlineQuery
+  :<|> answerCallbackQuery
+  :<|> kickChatMember
+  :<|> leaveChat
+  :<|> unbanChatMember
+  :<|> getChat
+  :<|> getChatAdministrators
+  :<|> getChatMembersCount
+  :<|> getChatMember
+  :<|> editMessageText
+  :<|> editMessageCaption
+  :<|> editMessageReplyMarkup
   :<|> editMessageText_
   :<|> editMessageCaption_
-  :<|> editMessageReplyMarkup_
-  :<|> editMessageText__
-  :<|> editMessageCaption__
-  :<|> editMessageReplyMarkup__ =
+  :<|> editMessageReplyMarkup_ =
       client api
 
 runClientEx :: BaseUrl
