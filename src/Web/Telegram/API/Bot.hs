@@ -6,5 +6,6 @@ module Web.Telegram.API.Bot
 
 import           Web.Telegram.API.Bot.API as TAPI
 import           Web.Telegram.API.Bot.Data as TAPI
-import           Web.Telegram.API.Bot.Responses as TAPI
+import           Web.Telegram.API.Bot.IO as TAPI
 import           Web.Telegram.API.Bot.Requests as TAPI
+import           Web.Telegram.API.Bot.Responses as TAPI
